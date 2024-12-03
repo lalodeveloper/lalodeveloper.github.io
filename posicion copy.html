@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Quiniela</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f4f4f9;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      .chart-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Evolución de Posiciones en la Quiniela</h1>
+    <div class="chart-container">
+      <canvas id="quinielaChart"
+              width="400"
+              height="200"></canvas>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const data = {
+          dates: ['2024-11-01', '2024-11-02', '2024-11-03', '2024-11-04'],
+          participant1: [3, 2, 1, 1], // Posiciones del Participante 1
+          participant2: [4, 3, 2, 1], // Posiciones del Participante 2
+        };
+
+        const ctx = document.getElementById('quinielaChart').getContext('2d');
+        const quinielaChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: data.dates, // Eje X
+            datasets: [
+              {
+                label: 'Participante 1',
+                data: data.participant1,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.4, // Suaviza la línea
+              },
+              {
+                label: 'Participante 2',
+                data: data.participant2,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                tension: 0.4, // Suaviza la línea
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Evolución de posiciones en la quiniela',
+              },
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    return `Posición: ${context.raw}`;
+                  },
+                },
+              },
+            },
+            scales: {
+              y: {
+                title: {
+                  display: true,
+                  text: 'Posición',
+                },
+                reverse: true, // Invierte el eje para que 1 esté arriba
+                ticks: {
+                  stepSize: 1, // Incrementos de 1
+                },
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Fecha',
+                },
+              },
+            },
+          },
+        });
+      });
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Líneas F1</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <canvas id="f1LineChart"
+            width="400"
+            height="200"></canvas>
+    <script>
+      // JSON de datos
+      const dataF1 = {
+        carreras: ["Bahréin", "Arabia Saudita", "Australia", "Mónaco", "Silverstone"],
+        pilotos: [
+          { nombre: "Max Verstappen", resultados: [25, 18, 15, 25, 18] },
+          { nombre: "Lewis Hamilton", resultados: [18, 15, 25, 18, 15] },
+          { nombre: "Sergio Pérez", resultados: [10, 25, 18, 12, 15] }
+        ]
+      };
+
+      // Configuración del gráfico
+      const ctx = document.getElementById('f1LineChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dataF1.carreras,
+          datasets: dataF1.pilotos.map(piloto => ({
+            label: piloto.nombre,
+            data: piloto.resultados,
+            fill: false, // No rellenar bajo la línea
+            borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+            borderWidth: 2,
+            tension: 0.3 // Suaviza las líneas (ajusta según lo desees)
+          }))
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Resultados de Pilotos en la Temporada F1'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Puntos'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Carreras'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+
+</html>
